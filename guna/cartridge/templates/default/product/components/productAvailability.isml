@@ -1,0 +1,12 @@
+
+<!-- Availability -->
+<div class="availability row product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
+    <isinclude template="product/components/availability" />
+    <!-- Displays the stock information from the model decorator -->
+
+    <div class="col-8 total-stock">
+        Total in Stock:  ${product.stockInformation}
+       <isprint value=${product.stockInformation} style="INTEGER" />
+    </div>
+</div>
+

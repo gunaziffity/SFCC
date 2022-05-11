@@ -1,0 +1,123 @@
+<div class="description-and-detail">
+    <div class="product-info-detailed">
+                
+                
+
+  
+  <style>
+		
+		
+		[data-tab-info] {
+			display: none;
+		}
+		
+		.active[data-tab-info] {
+			display: block;
+		}
+		
+		.tab-content {
+            margin-top: 40px;
+            margin-bottom: 40px;
+			color: rgb(82, 75, 75);
+		}
+		
+		.tabs {
+            font-weight: bold;
+			color: rgb(255, 255, 255);
+			display: flex;
+			margin: 0;
+		}
+		
+		.tabs span {
+			background: #ce181f;
+            padding: 17px 20px;
+            border: 1px solid rgb(255, 255, 255);
+		}
+		
+		.tabs span:hover {
+			background: #141414;
+			cursor: pointer;
+			color: white;
+		}
+	</style>
+    <div class="tab-wrapper">
+                <div class="product-data-items" role="tablist">
+    <div class="tabs">
+		<span data-tab-value="#tab_1">Attributes</span>
+		<span data-tab-value="#tab_2">Description</span>
+		<span data-tab-value="#tab_3">Reviews</span>
+	</div>
+    </div></div>
+
+	<div class="tab-content">
+		<div class="tabs__tab active" id="tab_1" data-tab-info>
+			<div class="row product-attributes collapsible-xs">
+                <isinclude template="product/components/attributes" />
+            </div>
+
+		</div>
+		<div class="tabs__tab" id="tab_2" data-tab-info>
+			<div class="row description collapsible-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
+            <div class="col-sm-12 col-md-4 col-lg-3">
+                <button class="title btn text-left btn-block d-sm-none"
+                        aria-expanded="false" aria-controls="collapsible-description-${loopState && loopState.count ? loopState.count : '1' }"
+                >
+                    ${Resource.msg('label.description', 'product', null)}
+                </button>
+                <h2 class="title d-none d-sm-block">${Resource.msg('label.description', 'product', null)}</h2>
+            </div>
+
+            <isinclude template="product/components/description" />
+        </div>
+
+		</div>
+		<div class="tabs__tab" id="tab_3" data-tab-info>
+			<p>Learn cool stuff.</p>
+
+		</div>
+	</div>
+	<script type="text/javascript">
+		const tabs = document.querySelectorAll('[data-tab-value]')
+		const tabInfos = document.querySelectorAll('[data-tab-info]')
+
+		tabs.forEach(tab => {
+			tab.addEventListener('click', () => {
+				const target = document
+					.querySelector(tab.dataset.tabValue);
+
+				tabInfos.forEach(tabInfo => {
+					tabInfo.classList.remove('active')
+				})
+				target.classList.add('active');
+			})
+		})
+	</script>
+
+    </div>
+    
+
+    <isif condition="${product.attributes && product.attributes.length}">
+        <hr class="d-sm-none">
+    </isif>
+
+    
+
+    <isif condition="${product.longDescription}">
+        <hr class="d-sm-none">
+    </isif>
+
+    <div class="row details collapsible-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
+        <div class="col-sm-12 col-md-4 col-lg-3">
+            <button class="title btn text-left btn-block d-sm-none"
+                    aria-expanded="false" aria-controls="collapsible-details-${loopState && loopState.count ? loopState.count : '1' }"
+            >
+                ${Resource.msg('label.details', 'product', null)}
+            </button>
+            <h2 class="title d-none d-sm-block">
+                ${Resource.msg('label.details', 'product', null)}
+            </h2>
+        </div>
+
+        <isinclude template="product/components/details" />
+    </div>
+</div>

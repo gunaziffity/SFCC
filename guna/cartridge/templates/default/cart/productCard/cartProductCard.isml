@@ -1,0 +1,81 @@
+<isset name="hasEmbeddedBonusProducts" value="${lineItem.bonusProductLineItemUUID === 'bonus'}"  scope="page"/>
+<isset name="bonusproductlineitem" value="${hasEmbeddedBonusProducts ? 'bonus-product-line-item' : ''}" scope="page"/>
+<isset name="bonuslineitemrow" value="${hasEmbeddedBonusProducts ? 'bonus-line-item-row' : ''}" scope="page"/>
+
+<div class="card product-info ${bonusproductlineitem} uuid-${lineItem.UUID}">
+    <!--- name and remove buttons --->
+    <isinclude template="cart/productCard/cartProductCardHeader" />
+
+    <div class="row ${bonuslineitemrow}">
+    <div class="cart table-wrapper">
+    <table id="shopping-cart-table" class="cart items data table">
+            <thead>
+                <tr>
+                    <th class="col item" scope="col"><span>Product Detail</span></th>
+                    <th class="col price" scope="col"><span>Price</span></th>
+                    <th class="col qty" scope="col"><span>Quantity</span></th>
+                    <th class="col subtotal" scope="col"><span>Subtotal</span></th>
+                    <th class="col action" scope="col"><span>Action</span></th>
+                </tr>
+            </thead>
+             <tbody class="cart item">
+                <tr class="item-info">
+                <td data-th="Product Detail" class="col item">
+                    <a href="" class="product-item-photo">
+                    <span class="product-image-container product-image-container-15734" style="width: 100px;">
+                        <span class="product-image-wrapper" style="padding-bottom: 100%;">
+                            <img class="product-image" src="${lineItem.images.small[0].url}" alt="${lineItem.images.small[0].alt}" title="${lineItem.images.small[0].title}">
+                        </span>
+                    </span>
+                    </a>
+                    <div class="product-item-details">
+                        <strong class="product-item-name">${lineItem.productName}</spam>
+                    </div>
+                </td>
+                <td data-th="col price" class="Price">
+                
+                    <!---item price--->
+                    <div class="line-item-price-${lineItem.UUID}">
+                        
+                        <isset name="price" value="${lineItem.price}" scope="page"/>
+                        <div class="unit-price">
+                            <isinclude template="/product/components/pricing/main" />
+                        </div>
+                    </div>
+                </td>
+                <td data-th="col qty" class="Quantity">
+                    <!--- quantity --->
+                    <div class="col-4 col-lg-3 line-item-quantity">
+                        <isinclude template="checkout/productCard/productCardQuantitySelector" />
+                    </div>
+                </td>
+                <td data-th="col subtotal" class="Subtotal">
+                    <!--- line item total price --->
+                    <div class="line-item-total-price">
+                        
+                        <div class="item-total-${lineItem.UUID} price">
+                            <isinclude template="checkout/productCard/productCardProductTotalPrice" />
+                        </div>
+                    </div>
+                </td>
+                <td data-th="col item-actions" colspan="4">
+                    <isinclude template="cart/productCard/cartProductCardEdit" />
+                    <isif condition="${!lineItem.isBonusProductLineItem}"/>
+                        <div class="hidden-md-down">
+                            <isinclude template="components/deleteButton" />
+                        </div>
+                    </isif>
+                </td>
+            </tbody>
+    </table>
+    </div>
+       
+        
+
+        
+    </div>
+
+    <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
+        <isinclude template="cart/productCard/cartEmbeddedBonusProducts" />
+    </isif>
+</div>
